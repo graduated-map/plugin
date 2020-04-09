@@ -1,0 +1,63 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Apr  9 10:55:13 2020
+
+@author: dell
+"""
+
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+import sys
+
+app=QApplication(sys.argv) # do wyswietlenia formatki w spiderze
+
+class dialogForm(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.resize(400,100)
+        
+        #   select vector layer
+        boxSelectLay=QHBoxLayout()
+        boxLabSelectL=QLabel("Select vector layer:")
+        self.chooseCombo=QComboBox()
+        boxLabSelectL.setBuddy(self.chooseCombo)
+        boxSelectLay.addWidget(boxLabSelectL)
+        boxSelectLay.addWidget(self.chooseCombo)
+        
+        #   warstwy do wyboru - do zmiany
+        self.layer_list = ["","warstwa1", "warstwa2", "warstwa ostatnia"]
+        self.chooseCombo.addItems(self.layer_list)
+        
+        #   select column
+        boxSelectCol=QHBoxLayout()
+        boxLabSelectC=QLabel("Select column:")
+        chooseColumn=QComboBox()
+        boxLabSelectC.setBuddy(chooseColumn)
+        boxSelectCol.addWidget(boxLabSelectC)
+        boxSelectCol.addWidget(chooseColumn)
+        
+        #   kolumny do wyboru - do zmiany
+        col_list = ["","col1", "col2", "col3"]
+        chooseColumn.addItems(col_list)
+
+        
+        #    buttonBox i główny layout
+        buttonBox = QDialogButtonBox(self)
+        buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+        
+        mainLayout=QVBoxLayout()
+        mainLayout.addStretch()
+        mainLayout.addLayout(boxSelectLay)
+        mainLayout.addLayout(boxSelectCol)
+        mainLayout.addWidget(buttonBox)
+        self.setLayout(mainLayout)
+        
+        #   sekcja połaczen
+        buttonBox.accepted.connect(self.accept)
+        buttonBox.rejected.connect(self.reject)
+
+        
+mojDialog = dialogForm()
+mojDialog.show()
+app.exec_()
